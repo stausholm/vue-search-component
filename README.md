@@ -1,4 +1,4 @@
-# googlemaps
+# Vue search component
 
 > A Vue.js project
 
