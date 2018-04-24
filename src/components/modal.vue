@@ -1,4 +1,5 @@
 <template>
+<transition name="fade">
 <div class="modal" v-if="showing" @click="closeModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -12,7 +13,8 @@
       <p>this is modal footer</p>
     </div>
   </div>
-</div>  
+</div>
+</transition>
 </template>
 
 <script>
@@ -54,13 +56,52 @@ export default {
   background-color:rgba(0,0,0,0.4);
   .modal-content {
     background-color:#fefefe;
-    margin: 15% auto;
+    margin: 2% auto;
     padding:20px;
     width: 100%;
     max-width:900px;
+    max-height: 94%; 
     img {
       max-width:100%;
     }
   }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+/*mixing transitions and keyframes*/
+.slide-enter {
+  opacity: 0;
+}
+.slide-enter-active {
+  animation: slide-up 1s ease-out forwards;
+  transition: opacity .5s;
+}
+.slide-leave-active {
+  animation: slide-up 1s ease-out forwards reverse;
+  transition: opacity 1s;
+  opacity: 0;
+  position: absolute;
+}
+.slide-move {
+  transition: transform 1s;
+}
+
+/*transitions*/
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  transition: opacity .3s;
+}
+.fade-leave-active {
+  transition: opacity .3s;
+  opacity: 0;
 }
 </style>

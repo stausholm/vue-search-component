@@ -1,30 +1,36 @@
 <template>
   <div id="search">
-    <div>
-      <input type="text" v-model="searchTerm">
-      <div>
-        <label>
-          <input type="radio" name="sortDirection" value="asc" v-model="sortDir">
-          <span>asc</span>
-        </label>
-        <label>
-          <input type="radio" name="sortDirection" value="desc" v-model="sortDir">
-          <span>desc</span>
-        </label>
-      </div>
-      <div>
-        <label>
-          <input type="radio" name="sortData" value="population" v-model="sortKey">
-          <span>population</span>
-        </label>
-        <label>
-          <input type="radio" name="sortData" value="name" v-model="sortKey">
-          <span>name</span>
-        </label>
-        <label>
-          <input type="radio" name="sortData" value="area" v-model="sortKey">
-          <span>area</span>
-        </label>
+    <div class="input-wrapper">
+      <input type="text" v-model="searchTerm" placeholder="Search...">
+      <div class="dropdown">
+        <button class="dropdown-button" @click="showDropdown = !showDropdown">Sort by: \/</button>
+        <fieldset class="dropdown-content" v-if="showDropdown">
+          <div>
+            <div>
+              <input type="radio" name="sortData" id="population" value="population" v-model="sortKey">
+              <label for="population">Population</label>
+            </div>
+            <div>
+              <input type="radio" name="sortData" id="name" value="name" v-model="sortKey">
+              <label for="name">Name</label>
+            </div>
+            <div>
+              <input type="radio" name="sortData" id="area" value="area" v-model="sortKey">
+              <label for="area">Area</label>
+            </div>
+          </div>
+          <hr>
+          <div>
+            <div>
+              <input type="radio" name="sortDirection" id="asc" value="asc" v-model="sortDir">
+              <label for="asc">Asc</label>
+            </div>
+            <div>
+              <input type="radio" name="sortDirection" id="desc" value="desc" v-model="sortDir">
+              <label for="desc">Desc</label>
+            </div>
+          </div>
+        </fieldset>
       </div>
     </div>
     <p>Matching results: {{filteredListData.length}}</p>
@@ -47,7 +53,8 @@ export default {
     return {
       searchTerm: '',
       sortKey: 'name',
-      sortDir: 'asc'
+      sortDir: 'asc',
+      showDropdown: false
     }
   },
   components: {
@@ -172,4 +179,93 @@ export default {
 // .slide-move {
 //   transition: transform 1s;
 // }
+
+.input-wrapper {
+  display: flex;
+  input[type="text"] {
+    background: #F1F2F3;
+    border: 2px solid #F1F2F3;
+    padding: 10px 20px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    outline: none;
+    font-size: 13px;
+
+    &:hover {
+      border-color: #F1F2F3;
+    }
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+
+    .dropdown-button {
+      background-color: #ddd;
+      color:#fff;
+      padding: 10px 20px;
+      font-size: 13px;
+      outline: none;
+      border: 2px solid #F1F2F3;
+      cursor: pointer;
+
+      &:hover, &:focus {
+        background-color: #ccc;
+      }
+    }
+
+    .dropdown-content {
+      display: block;
+      border: none;
+      position: absolute;
+      background-color: #f1f1f1;
+      min-width: 160px;
+      z-index: 1;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      right: 0;
+      top: 100%;
+
+      > div {
+        display: flex;
+        flex-direction: column;
+
+        // &:nth-child(1) {
+        //   border-bottom: 1px solid grey;
+        // }
+
+        div {
+          display: flex;
+          align-items: center;
+          padding: 4px 12px;
+        }
+      }
+
+      hr {
+        border: none;
+        border-bottom: 1px solid #ccc;
+        margin: 7px 12px;
+      }
+
+      input[type="radio"] {
+        appearance: none;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #ccc;
+        transition: 0.2s border-width ease-out;
+        outline: none;
+        margin-right: 5px;
+        cursor: pointer;
+
+        &:checked {
+          border: 6px solid #ccc;
+        }
+      }
+      label {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 </style>
