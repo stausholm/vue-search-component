@@ -8,6 +8,7 @@
     <div class="modal-body">
       <p>this is modal body</p>
       <img :src="item.flag" :alt="item.name + ' flag'">
+      <p>Capital: {{item.capital}}</p>
     </div>
     <div class="modal-footer">
       <p>this is modal footer</p>

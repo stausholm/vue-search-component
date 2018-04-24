@@ -47,10 +47,12 @@ export default {
 }
 body {
   font-family: 'Nunito', sans-serif;
-  font-size: 16px;
+  font-size: 13px;
+  color: #343434;
 }
 #app {
-  margin: 0 auto;
-  max-width: 900px;
+  // margin: 0 auto;
+  // max-width: 1000px;
+  // padding: 20px;
 }
 </style>

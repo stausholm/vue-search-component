@@ -1,46 +1,48 @@
 <template>
   <div id="search">
-    <div class="input-wrapper">
-      <input type="text" v-model="searchTerm" placeholder="Search...">
-      <div class="dropdown">
-        <button class="dropdown-button" @click="showDropdown = !showDropdown">Sort by: \/</button>
-        <fieldset class="dropdown-content" v-if="showDropdown">
-          <div>
+    <div class="search-bar">
+      <p>Found {{filteredListData.length}} matching results</p>
+      <div class="input-wrapper">
+        <input type="text" v-model="searchTerm" placeholder="Search...">
+        <div class="dropdown">
+          <button class="dropdown-button" @click="showDropdown = !showDropdown">Sort by: \/</button>
+          <fieldset class="dropdown-content" v-if="showDropdown">
             <div>
-              <input type="radio" name="sortData" id="population" value="population" v-model="sortKey">
-              <label for="population">Population</label>
+              <div>
+                <input type="radio" name="sortData" id="population" value="population" v-model="sortKey">
+                <label for="population">Population</label>
+              </div>
+              <div>
+                <input type="radio" name="sortData" id="name" value="name" v-model="sortKey">
+                <label for="name">Name</label>
+              </div>
+              <div>
+                <input type="radio" name="sortData" id="area" value="area" v-model="sortKey">
+                <label for="area">Area</label>
+              </div>
             </div>
+            <hr>
             <div>
-              <input type="radio" name="sortData" id="name" value="name" v-model="sortKey">
-              <label for="name">Name</label>
+              <div>
+                <input type="radio" name="sortDirection" id="asc" value="asc" v-model="sortDir">
+                <label for="asc">Asc</label>
+              </div>
+              <div>
+                <input type="radio" name="sortDirection" id="desc" value="desc" v-model="sortDir">
+                <label for="desc">Desc</label>
+              </div>
             </div>
-            <div>
-              <input type="radio" name="sortData" id="area" value="area" v-model="sortKey">
-              <label for="area">Area</label>
-            </div>
-          </div>
-          <hr>
-          <div>
-            <div>
-              <input type="radio" name="sortDirection" id="asc" value="asc" v-model="sortDir">
-              <label for="asc">Asc</label>
-            </div>
-            <div>
-              <input type="radio" name="sortDirection" id="desc" value="desc" v-model="sortDir">
-              <label for="desc">Desc</label>
-            </div>
-          </div>
-        </fieldset>
+          </fieldset>
+        </div>
       </div>
     </div>
-    <p>Matching results: {{filteredListData.length}}</p>
-    <!-- <ul v-if="filteredListData.length > 0">
-        <SearchItem v-for="(country, i) in sortedListData" :key="i" :country="country"/>
-    </ul>
-    <p v-else>Nothing to see here!</p> -->
-    <transition-group name="slide" tag="ul" class="list-group" v-bind:css="false" v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave">
-      <SearchItem v-for="(country, i) in sortedListData" :key="i" :country="country" :data-index="i" class="list-group-item"/>
-    </transition-group>
+    
+    <div class="search-results">
+      <transition-group name="slide" tag="ul" class="list-group" v-bind:css="false" v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave">
+        <SearchItem v-for="(country, i) in sortedListData" :key="i" :country="country" :data-index="i" class="list-group-item"/>
+      </transition-group>
+      <p v-if="filteredListData.length == 0" class="list-group">Nothing to see here!</p>
+    </div>
   </div>
 </template>
 
@@ -124,9 +126,9 @@ export default {
     enter: function (el, done) {
       var delay;
       if (el.dataset.index > 5) {
-        delay = 150 * 5;
+        delay = 50 * 5;
       } else {
-        delay = el.dataset.index * 150
+        delay = el.dataset.index * 50
       }
       setTimeout(function () {
         el.style.opacity = 1;
@@ -136,9 +138,9 @@ export default {
     leave: function (el, done) {
       var delay;
       if (el.dataset.index > 5) {
-        delay = 150 * 5;
+        delay = 50 * 5;
       } else {
-        delay = el.dataset.index * 150
+        delay = el.dataset.index * 50
       }
       setTimeout(function () {
         el.style.opacity = 0;
@@ -179,7 +181,15 @@ export default {
 // .slide-move {
 //   transition: transform 1s;
 // }
-
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 200px;
+}
 .input-wrapper {
   display: flex;
   input[type="text"] {
@@ -267,5 +277,14 @@ export default {
     }
   }
 }
+.search-results {
+  background-color: #F1F2F3;
+  min-height: 80vh;
 
+  .list-group {
+    margin: 0 auto;
+    max-width: 1000px;
+    padding: 20px;
+  }
+}
 </style>
