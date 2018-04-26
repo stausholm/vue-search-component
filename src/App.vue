@@ -2,7 +2,7 @@
   <div id="app">
     <Modal/>
     <GoogleMap/>
-    <Search :countries="mapData"/>
+    <Search :countries="mapData" :isLoading="isLoading"/>
   </div>
 </template>
 
@@ -15,7 +15,8 @@ export default {
   name: 'App',
   data() {
     return {
-      mapData: []
+      mapData: [],
+      isLoading: true
     }
   },
   components: {
@@ -31,7 +32,10 @@ export default {
     request.onload = function() {
       if (request.status == 200) {
         let data = JSON.parse(request.responseText);
-        return x.mapData = data;// = data.slice(0,10);
+        setTimeout(function(){
+          x.isLoading = false;
+          return x.mapData = data;// = data.slice(0,10);
+        },500);
       }
     };
   }
